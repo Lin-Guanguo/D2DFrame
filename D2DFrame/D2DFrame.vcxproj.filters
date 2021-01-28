@@ -25,9 +25,6 @@
     <ClCompile Include="D2DFactory.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="GameTimer.cpp">
-      <Filter>Source Files\event</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceLoader.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
@@ -36,6 +33,12 @@
     </ClCompile>
     <ClCompile Include="Util.cpp">
       <Filter>Source Files\other</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTimer.cpp">
+      <Filter>Source Files\event</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameWindow.cpp">
+      <Filter>Source Files\window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -48,12 +51,6 @@
     <ClInclude Include="ID2DGraph.h">
       <Filter>Source Files\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="GameTimer.h">
-      <Filter>Source Files\event</Filter>
-    </ClInclude>
-    <ClInclude Include="IUpdateWithTime.h">
-      <Filter>Source Files\event</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceLoader.h">
       <Filter>Source Files\graphics</Filter>
     </ClInclude>
@@ -62,6 +59,15 @@
     </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>Source Files\other</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTimer.h">
+      <Filter>Source Files\event</Filter>
+    </ClInclude>
+    <ClInclude Include="IUpdateWithTime.h">
+      <Filter>Source Files\event</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameWindow.h">
+      <Filter>Source Files\window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
