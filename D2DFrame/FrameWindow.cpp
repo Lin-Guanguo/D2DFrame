@@ -1,7 +1,54 @@
 #include "pch.h"
 #include "FrameWindow.h"
+#include "IUpdateWithTime.h"
 
-#define ReturnOptionOrBreak(option) { if((option).has_value()) return (option).value(); else break; }
+#define ReturnOptionOrBreak(option) { auto o = (option); if(o.has_value()) return o.value(); else break; }
+
+void LGG::FrameWindow::run()
+{
+	mMainTimer.reset();
+	MSG msg = {};
+	while (msg.message != WM_QUIT)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		else {
+			mMainTimer.tick();
+			runEveryLoop();
+			calculateFrameStats();
+			update();
+			reRender();
+		}
+	}
+}
+
+void LGG::FrameWindow::update()
+{
+	auto& t = this->mMainTimer;
+	mUpdateList.forEachAndClean(
+		[&t](IUpdateWithTime& o) {
+			o.update(t);
+		}
+	);
+}
+
+void LGG::FrameWindow::reRender()
+{
+	InvalidateRect(mhWnd, NULL, FALSE);
+}
+
+void LGG::FrameWindow::calculateFrameStats()
+{
+	mFrameCntForCalculateFrameStats++;
+	if ((mMainTimer.totalTime() - mTimeElapsedForCalculateFrameStats) >= 1.0f)
+	{
+		float fps = (float)mFrameCntForCalculateFrameStats;
+		mFrameCntForCalculateFrameStats = 0;
+		++mTimeElapsedForCalculateFrameStats;
+	}
+}
 
 LRESULT LGG::FrameWindow::handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -29,8 +76,25 @@ LRESULT LGG::FrameWindow::handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(mhWnd, uMsg, wParam, lParam);
 }
 
+std::optional<LRESULT> LGG::FrameWindow::onCreate(LPARAM lParam)
+{
+	mD2DFactory.initialization();
+	return 0;
+}
+
 std::optional<LRESULT> LGG::FrameWindow::onDestory()
 {
 	PostQuitMessage(0);
+	return 0;
+}
+
+std::optional<LRESULT> LGG::FrameWindow::onPaint()
+{
+	PAINTSTRUCT ps;
+	BeginPaint(mhWnd, &ps);
+	{
+		mD2DFactory.render(mhWnd);
+	}
+	EndPaint(mhWnd, &ps);
 	return 0;
 }

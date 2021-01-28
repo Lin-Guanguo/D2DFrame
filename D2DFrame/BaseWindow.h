@@ -6,14 +6,14 @@ namespace LGG
 class BaseWindow
 {
 public:
+	virtual ~BaseWindow() = 0;
+
 	void showWindow(int nCmdShow);
 
 	HWND gethWnd() const { return mhWnd; }
 
 protected:
 	HWND mhWnd = NULL;
-
-	virtual ~BaseWindow() = 0;
 
 	virtual LRESULT handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
 

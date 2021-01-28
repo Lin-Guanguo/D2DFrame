@@ -24,8 +24,8 @@ public:
 	HRESULT hresult() const { return hr_; }
 };
 
-#define THROW_ON_FAILED(hr) { if (FAILED(hr)) { throw LGG::Direct2DError{ hr }; } }
-#define THROW_ON_FAILED(hr, message) { if (FAILED(hr)) { throw LGG::Direct2DError{ hr, message }; } }
+#define THROW_ON_FAILED(hresult) { auto hr = (hresult); if (FAILED(hr)) { throw LGG::Direct2DError{ hr }; } }
+#define THROW_ON_FAILED(hresult, message) { auto hr = (hresult); if (FAILED(hr)) { throw LGG::Direct2DError{ hr, (message) }; } }
 
 namespace Format 
 {

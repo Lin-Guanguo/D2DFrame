@@ -4,7 +4,7 @@
 namespace LGG
 {
 
-    class ID2DGraph;
+class ID2DGraph;
 
 class D2DFactory
 {
