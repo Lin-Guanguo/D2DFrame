@@ -29,7 +29,7 @@ void LGG::GameTimer::tick()
 
 float LGG::GameTimer::deltaTime() const 
 {
-	return mDeltaTime;
+	return static_cast<float>(mDeltaTime);
 }
 
 void LGG::GameTimer::reset()
