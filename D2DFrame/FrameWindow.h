@@ -7,6 +7,8 @@ namespace LGG
 class FrameWindow : public BaseWindow
 {
 protected:
+	virtual ~FrameWindow() = 0;
+
 	virtual LRESULT handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	//WM_CREATE

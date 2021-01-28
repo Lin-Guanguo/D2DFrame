@@ -13,6 +13,8 @@ public:
 protected:
 	HWND mhWnd = NULL;
 
+	virtual ~BaseWindow() = 0;
+
 	virtual LRESULT handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
 
 	static ATOM Rigister(PCWCHAR className);
