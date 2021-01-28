@@ -69,5 +69,8 @@
     <ClInclude Include="FrameWindow.h">
       <Filter>Source Files\window</Filter>
     </ClInclude>
+    <ClInclude Include="WeakPtrList.h">
+      <Filter>Source Files\other</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,7 +2,6 @@
 #include "BaseWindow.h"
 #include "GameTimer.h"
 #include "D2DFactory.h"
-#include "Util.h"
 
 namespace LGG
 {
@@ -28,8 +27,6 @@ protected:
 	float mFps;
 
 public:
-	virtual ~FrameWindow() = 0;
-
 	virtual void run();
 
 private:

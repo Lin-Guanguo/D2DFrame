@@ -6,8 +6,6 @@ namespace LGG
 class BaseWindow
 {
 public:
-	virtual ~BaseWindow() = 0;
-
 	void showWindow(int nCmdShow);
 
 	HWND gethWnd() const { return mhWnd; }

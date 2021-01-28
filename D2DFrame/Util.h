@@ -24,8 +24,8 @@ public:
 	HRESULT hresult() const { return hr_; }
 };
 
-#define THROW_ON_FAILED(hresult) { auto hr = (hresult); if (FAILED(hr)) { throw LGG::Direct2DError{ hr }; } }
-#define THROW_ON_FAILED(hresult, message) { auto hr = (hresult); if (FAILED(hr)) { throw LGG::Direct2DError{ hr, (message) }; } }
+#define THROW_ON_FAILED(hr) { auto THROW_ON_FAILED_hr = hr; if (FAILED(THROW_ON_FAILED_hr)) { throw LGG::Direct2DError{ THROW_ON_FAILED_hr }; } }
+#define THROW_ON_FAILED(hr, message) { auto THROW_ON_FAILED_hr = hr; if (FAILED(THROW_ON_FAILED_hr)) { throw LGG::Direct2DError{ THROW_ON_FAILED_hr, message }; } }
 
 namespace Format 
 {
@@ -56,25 +56,6 @@ void DebugOutPut(T... args)
 {
     OutputDebugString(Format::concatTowstring(std::forward<T>(args)..., L"\n").data());
 }
-
-template<typename T>
-class WeakPtrList : public std::list<std::weak_ptr<T>>
-{
-public:
-    template<typename Func>
-    auto forEachAndClean(Func function) {
-        for (auto iter = this->begin(); iter != this->end(); ) {
-            auto sp = iter->lock();
-            if (sp != nullptr) {
-                function(*sp);
-                ++iter;
-            }
-            else {
-                iter = this->erase(iter);
-            }
-        }
-    }
-};
 
 }
 

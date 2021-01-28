@@ -1,8 +1,9 @@
 #include "pch.h"
 #include "FrameWindow.h"
 #include "IUpdateWithTime.h"
+#include "Util.h"
 
-#define ReturnOptionOrBreak(option) { auto o = (option); if(o.has_value()) return o.value(); else break; }
+#define ReturnOptionOrBreak(option) { auto&& ReturnOptionOrBreak_o = (option); if(ReturnOptionOrBreak_o.has_value()) return ReturnOptionOrBreak_o.value(); else break; }
 
 void LGG::FrameWindow::run()
 {

@@ -179,6 +179,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="ResourceLoader.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="WeakPtrList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
