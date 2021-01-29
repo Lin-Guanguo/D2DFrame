@@ -24,8 +24,8 @@ public:
 	HRESULT hresult() const { return hr_; }
 };
 
-#define THROW_ON_FAILED(hr) { auto THROW_ON_FAILED_hr = hr; if (FAILED(THROW_ON_FAILED_hr)) { throw LGG::Direct2DError{ THROW_ON_FAILED_hr }; } }
-#define THROW_ON_FAILED_MESSAGE(hr, message) { auto THROW_ON_FAILED_hr = hr; if (FAILED(THROW_ON_FAILED_hr)) { throw LGG::Direct2DError{ THROW_ON_FAILED_hr, message }; } }
+#define THROW_ON_FAILED(hr) { auto&& THROW_ON_FAILED_hr = hr; if (FAILED(THROW_ON_FAILED_hr)) { throw LGG::Direct2DError{ THROW_ON_FAILED_hr }; } }
+#define THROW_ON_FAILED_MESSAGE(hr, message) { auto&& THROW_ON_FAILED_hr = hr; if (FAILED(THROW_ON_FAILED_hr)) { throw LGG::Direct2DError{ THROW_ON_FAILED_hr, message }; } }
 
 namespace Format 
 {
