@@ -27,12 +27,7 @@ void LGG::FrameWindow::run()
 
 void LGG::FrameWindow::update()
 {
-	auto& t = this->mMainTimer;
-	mUpdateList.forEachAndClean(
-		[&t](IUpdateWithTime& o) {
-			o.update(t);
-		}
-	);
+	mUpdateList.update(mMainTimer);
 }
 
 void LGG::FrameWindow::reRender()
@@ -79,7 +74,7 @@ LRESULT LGG::FrameWindow::handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 std::optional<LRESULT> LGG::FrameWindow::onCreate(LPARAM lParam)
 {
-	mD2DFactory.initialization();
+	mD2DGraphicsList.initialization();
 	return 0;
 }
 
@@ -94,7 +89,7 @@ std::optional<LRESULT> LGG::FrameWindow::onPaint()
 	PAINTSTRUCT ps;
 	BeginPaint(mhWnd, &ps);
 	{
-		mD2DFactory.render(mhWnd);
+		mD2DGraphicsList.render(mhWnd);
 	}
 	EndPaint(mhWnd, &ps);
 	return 0;

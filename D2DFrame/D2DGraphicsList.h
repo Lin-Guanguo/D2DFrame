@@ -4,9 +4,9 @@
 namespace LGG
 {
 
-class ID2DGraph;
+class ID2DGraphics;
 
-class D2DFactory
+class D2DGraphicsList : public WeakPtrList<ID2DGraphics>
 {
 private:
 
@@ -14,15 +14,10 @@ private:
     CComPtr<ID2D1HwndRenderTarget> mRenderTarget;
     
     D2D1_SIZE_U mSizeofRenderTarget;
-    
-	WeakPtrList<ID2DGraph> mSubGraph;
 public:
-    //以默认渲染大小创建
-	D2DFactory() : D2DFactory(100, 100) { };
+    D2DGraphicsList(D2D1_SIZE_U renderTargetSize = {100u, 100u});
 
-	D2DFactory(int x, int y);
-
-    ~D2DFactory();
+    ~D2DGraphicsList();
 
     //建立 工厂 和 设备无关资源
     void initialization();
@@ -33,15 +28,6 @@ public:
     void resize(int x, int y);
 
     void render(HWND hwnd);
-
-    //在底部添加新图像
-    void addSubGraphOnTop(std::weak_ptr<ID2DGraph> subGraph);
-
-    //在顶层添加新图像
-    void addSubGraphOnButtom(std::weak_ptr<ID2DGraph> subGraph);
-
-    //清空图像
-    void clearSubGraph();
 
     //根据 DPI 和 窗口大小与渲染目标大小比例 转换坐标
     //使用场景: 渲染目标 相比于 窗口 有拉伸
@@ -55,7 +41,7 @@ private:
     //建立 设备无关的资源, 只会被initialization()调用一次
     void createDeviceIndependentResources();
 
-    //释放 设备无关的资源, 只会被~D2DFactory()调用一次
+    //释放 设备无关的资源, 只会被~D2DGraphicsList()调用一次
     void discardDeviceIndependentResources();
 
     //建立 设备依赖的资源, 当设备变化时(初始化时)被调用

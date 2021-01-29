@@ -1,25 +1,16 @@
 #pragma once
 
 #include "BaseWindow.h"
-#include "GameTimer.h"
-#include "D2DFactory.h"
-#include "IUpdateWithTime.h"
-#include "Util.h"
+#include "FrameWindow.h"
 
 namespace LGG 
 {
 
 class FlappyBird;
 
-class GameWindow : public BaseWindow
+class GameWindow : public FrameWindow
 {
 private:
-	GameTimer mMainTimer;
-	int mTimeElapsedForCalculateFrameStats = 0;
-
-	D2DFactory mGraphFactory;
-	WeakPtrList<IUpdateWithTime> mUpdateList;
-
 	std::shared_ptr<FlappyBird> mFlappyBird;
 
 public:
@@ -28,28 +19,13 @@ public:
 
 	GameWindow();
 
-	//开启主事件循环
-	void run();
-
 private:
-	//win32事件处理
-	virtual LRESULT handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-	//更新数据
-	void update();
-
-	//渲染图像
-	void reRender();
-
-	//计算FPS等框架信息
-	void CalculateFrameStats();
-
 	//处理 键盘 事件
-	std::optional<LRESULT> onKeyDown(WPARAM virtualKey, LPARAM flag);
+	virtual std::optional<LRESULT> onKeyDown(WPARAM virtualKey, LPARAM flag) override;
 
-	std::optional<LRESULT> onLeftButtonDown(WPARAM virtualKeyState, int x, int y);
+	virtual std::optional<LRESULT> onLeftButtonDown(WPARAM virtualKeyState, int x, int y) override;
 
-	std::optional<LRESULT> onRightButtonDown(WPARAM virtualKeyState, int x, int y);
+	virtual std::optional<LRESULT> onRightButtonDown(WPARAM virtualKeyState, int x, int y) override;
 
 };
 

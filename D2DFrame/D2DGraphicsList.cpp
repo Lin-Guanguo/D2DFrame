@@ -1,26 +1,25 @@
 #include "pch.h"
-#include "D2DFactory.h"
-#include "ID2DGraph.h"
+#include "D2DGraphicsList.h"
+#include "ID2DGraphics.h"
 #include "Util.h"
 
-LGG::D2DFactory::D2DFactory(int x, int y)
-    :mSizeofRenderTarget(D2D1::SizeU(x,y))
+LGG::D2DGraphicsList::D2DGraphicsList(D2D1_SIZE_U renderTargetSize)
+    :mSizeofRenderTarget(renderTargetSize)
 {
-
 }
 
-LGG::D2DFactory::~D2DFactory()
+LGG::D2DGraphicsList::~D2DGraphicsList()
 {
     discardDeviceDependentResources();
     discardDeviceIndependentResources();
 }
 
-void LGG::D2DFactory::initialization()
+void LGG::D2DGraphicsList::initialization()
 {
     createDeviceIndependentResources();
 }
 
-void LGG::D2DFactory::resize(int x, int y)
+void LGG::D2DGraphicsList::resize(int x, int y)
 {
     mSizeofRenderTarget = D2D1::SizeU(x, y);
     if (mRenderTarget) {
@@ -30,7 +29,7 @@ void LGG::D2DFactory::resize(int x, int y)
     }
 }
 
-void LGG::D2DFactory::render(HWND hwnd)
+void LGG::D2DGraphicsList::render(HWND hwnd)
 {
     createDeviceDependentResources(hwnd);
 
@@ -38,8 +37,8 @@ void LGG::D2DFactory::render(HWND hwnd)
 
     mRenderTarget->BeginDraw();
     {
-        mSubGraph.forEachAndClean(
-            [renderTarget = mRenderTarget](ID2DGraph& g) {
+        this->forEachAndClean(
+            [renderTarget = mRenderTarget](ID2DGraphics& g) {
                 g.render(renderTarget);
             }
         );
@@ -55,22 +54,7 @@ void LGG::D2DFactory::render(HWND hwnd)
     }
 }
 
-void LGG::D2DFactory::addSubGraphOnTop(std::weak_ptr<ID2DGraph> subGraph)
-{
-    mSubGraph.emplace_back(subGraph);
-}
-
-void LGG::D2DFactory::addSubGraphOnButtom(std::weak_ptr<ID2DGraph> subGraph)
-{
-    mSubGraph.emplace_front(subGraph);
-}
-
-void LGG::D2DFactory::clearSubGraph()
-{
-    mSubGraph.clear();
-}
-
-D2D1_POINT_2F LGG::D2DFactory::pointWindowToRenderTargetRate(HWND hwnd)
+D2D1_POINT_2F LGG::D2DGraphicsList::pointWindowToRenderTargetRate(HWND hwnd)
 {
     RECT rect;
     GetClientRect(hwnd, &rect);
@@ -80,13 +64,13 @@ D2D1_POINT_2F LGG::D2DFactory::pointWindowToRenderTargetRate(HWND hwnd)
     return D2D1::Point2F(ratex, ratey);
 }
 
-float LGG::D2DFactory::dpiWindowToRenderTargetRate(HWND hwnd)
+float LGG::D2DGraphicsList::dpiWindowToRenderTargetRate(HWND hwnd)
 {
     auto dpi = GetDpiForWindow(hwnd);
     return 96.0f / dpi;
 }
 
-void LGG::D2DFactory::createDeviceIndependentResources()
+void LGG::D2DGraphicsList::createDeviceIndependentResources()
 {
     THROW_ON_FAILED(
         D2D1CreateFactory(
@@ -94,23 +78,23 @@ void LGG::D2DFactory::createDeviceIndependentResources()
             &mFactory)
     );
 
-    mSubGraph.forEachAndClean(
-        [factory = mFactory](ID2DGraph& g) {
+    this->forEachAndClean(
+        [factory = mFactory](ID2DGraphics& g) {
             g.createDeviceIndependentResources(factory);
         }
     );
 }
 
-void LGG::D2DFactory::discardDeviceIndependentResources()
+void LGG::D2DGraphicsList::discardDeviceIndependentResources()
 {
-    mSubGraph.forEachAndClean(
-        [](ID2DGraph& g) {
+    this->forEachAndClean(
+        [](ID2DGraphics& g) {
             g.discardDeviceIndependentResources();
         }
     );
 }
 
-void LGG::D2DFactory::createDeviceDependentResources(HWND hwnd)
+void LGG::D2DGraphicsList::createDeviceDependentResources(HWND hwnd)
 {
     if (mRenderTarget == NULL)
     {
@@ -122,18 +106,18 @@ void LGG::D2DFactory::createDeviceDependentResources(HWND hwnd)
         );
 
 
-        mSubGraph.forEachAndClean(
-            [renderTarget = mRenderTarget](ID2DGraph& g) {
+        this->forEachAndClean(
+            [renderTarget = mRenderTarget](ID2DGraphics& g) {
                 g.createDeviceDependentResources(renderTarget);
             }
         );
     }
 }
 
-void LGG::D2DFactory::discardDeviceDependentResources()
+void LGG::D2DGraphicsList::discardDeviceDependentResources()
 {
-    mSubGraph.forEachAndClean(
-        [](ID2DGraph& g) {
+    this->forEachAndClean(
+        [](ID2DGraphics& g) {
             g.discardDeviceDependentResources();
         }
     );

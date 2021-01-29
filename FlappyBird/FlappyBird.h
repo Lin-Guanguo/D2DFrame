@@ -1,12 +1,12 @@
 #pragma once
-#include "ID2DGraph.h"
+#include "ID2DGraphics.h"
 #include "IUpdateWithTime.h"
 #include "constants.h"
 
 namespace LGG
 {
 
-class FlappyBird : public ID2DGraph, public IUpdateWithTime
+class FlappyBird : public ID2DGraphics, public IUpdateWithTime
 {
 public:
     enum class BirdState {

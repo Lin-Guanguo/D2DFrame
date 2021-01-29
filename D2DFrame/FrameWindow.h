@@ -1,7 +1,8 @@
 #pragma once
 #include "BaseWindow.h"
 #include "GameTimer.h"
-#include "D2DFactory.h"
+#include "D2DGraphicsList.h"
+#include "UpdateList.h"
 
 namespace LGG
 {
@@ -11,20 +12,24 @@ class IUpdateWithTime;
 class FrameWindow : public BaseWindow
 {
 protected:
-
 	//主计时器
 	GameTimer mMainTimer;
 
 	//DirectX2D管理工厂
 	//将实现了ID2DGraph接口的组件放入其中，在事件循环中自动绘制。
-	D2DFactory mD2DFactory;
+	D2DGraphicsList mD2DGraphicsList;
 
 	//数据更新管理
 	//将实现了IUpdateWithTime接口的组件放入其中，在事件循环中根据定时器更新。
-	WeakPtrList<IUpdateWithTime> mUpdateList;
+	UpdateList mUpdateList;
 
 	//帧率统计
-	float mFps;
+	float mFps = 0;
+
+protected:
+	FrameWindow() = default;
+
+	FrameWindow(D2D1_SIZE_U renderTargetSize) : mD2DGraphicsList(renderTargetSize) { };
 
 public:
 	virtual void run();
@@ -48,7 +53,7 @@ protected:
 	virtual LRESULT handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 	//WM_CREATE
-	//default operation: call mD2DFactory.initialization(); return 0;
+	//default operation: call mD2DGraphicsList.initialization(); return 0;
 	virtual std::optional<LRESULT> onCreate(LPARAM lParam);
 
 	//WM_DESTORY
@@ -56,7 +61,7 @@ protected:
 	virtual std::optional<LRESULT> onDestory();
 
 	//WM_PAINT
-	//default operation: call mD2DFactory.render(HWND);
+	//default operation: call mD2DGraphicsList.render(HWND);
 	virtual std::optional<LRESULT> onPaint();
 
 	//WM_KEYDOWN

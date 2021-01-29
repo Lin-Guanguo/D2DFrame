@@ -3,7 +3,7 @@
 namespace LGG
 {
 
-    class ID2DGraph
+    class ID2DGraphics
     {
     public:
         virtual void render(CComPtr<ID2D1HwndRenderTarget> renderTarget) = 0;

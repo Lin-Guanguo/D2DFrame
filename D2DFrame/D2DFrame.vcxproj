@@ -157,7 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseWindow.cpp" />
-    <ClCompile Include="D2DFactory.cpp" />
+    <ClCompile Include="D2DGraphicsList.cpp" />
     <ClCompile Include="FrameWindow.cpp" />
     <ClCompile Include="GameTimer.cpp" />
     <ClCompile Include="pch.cpp">
@@ -167,17 +167,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ResourceLoader.cpp" />
+    <ClCompile Include="UpdateList.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseWindow.h" />
-    <ClInclude Include="D2DFactory.h" />
+    <ClInclude Include="D2DGraphicsList.h" />
     <ClInclude Include="FrameWindow.h" />
     <ClInclude Include="GameTimer.h" />
-    <ClInclude Include="ID2DGraph.h" />
+    <ClInclude Include="ID2DGraphics.h" />
     <ClInclude Include="IUpdateWithTime.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="UpdateList.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WeakPtrList.h" />
   </ItemGroup>
