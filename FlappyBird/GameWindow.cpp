@@ -60,7 +60,6 @@ std::optional<LRESULT> LGG::GameWindow::onLeftButtonDown(WPARAM virtualKeyState,
 
 std::optional<LRESULT> LGG::GameWindow::onRightButtonDown(WPARAM virtualKeyState, int x, int y)
 {
-
 	return std::nullopt;
 }
 

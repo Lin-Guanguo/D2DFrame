@@ -56,6 +56,8 @@ LRESULT LGG::FrameWindow::handleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 		ReturnOptionOrBreak(onDestory());
 	case WM_PAINT:
 		ReturnOptionOrBreak(onPaint());
+	case WM_SIZE:
+		ReturnOptionOrBreak(onSize(wParam, LOWORD(lParam), HIWORD(lParam)));
 	case WM_KEYDOWN: 
 		ReturnOptionOrBreak(onKeyDown(wParam, lParam));
 	case WM_KEYUP: 
@@ -92,5 +94,13 @@ std::optional<LRESULT> LGG::FrameWindow::onPaint()
 		mD2DGraphicsList.render(mhWnd);
 	}
 	EndPaint(mhWnd, &ps);
+	return 0;
+}
+
+std::optional<LRESULT> LGG::FrameWindow::onSize(WPARAM request, WORD width, WORD height)
+{
+	if (mOptionResizeRenderTargetWithWindow) {
+		mD2DGraphicsList.resize({ width, height });
+	}
 	return 0;
 }

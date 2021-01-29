@@ -167,6 +167,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ResourceLoader.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="UpdateList.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
@@ -179,6 +180,7 @@
     <ClInclude Include="IUpdateWithTime.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ResourceLoader.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="UpdateList.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WeakPtrList.h" />

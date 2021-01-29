@@ -26,6 +26,11 @@ protected:
 	//帧率统计
 	float mFps = 0;
 
+	//一些设置
+
+	//渲染区域大小是否随WM_SIZE同步改变
+	bool mOptionResizeRenderTargetWithWindow = false;
+
 protected:
 	FrameWindow() = default;
 
@@ -63,6 +68,10 @@ protected:
 	//WM_PAINT
 	//default operation: call mD2DGraphicsList.render(HWND);
 	virtual std::optional<LRESULT> onPaint();
+
+	//WM_SIZE
+	//default operation: ;
+	virtual std::optional<LRESULT> onSize(WPARAM request, WORD width, WORD height);
 
 	//WM_KEYDOWN
 	//default operation: call DefWindowProc()

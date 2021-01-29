@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GameTimer.h"
 
-
 LGG::GameTimer::GameTimer()
 {
 	QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&mCountsPerSec));
@@ -27,8 +26,13 @@ void LGG::GameTimer::tick()
 	}
 }
 
-float LGG::GameTimer::deltaTime() const 
+float LGG::GameTimer::deltaTime() const
 {
+	//debug模式下开启
+	//控制最大帧时间，用以解决断点调试问题
+#ifdef DEBUG
+	return static_cast<float>(mDeltaTime < 0.05 ? mDeltaTime : 0.05);
+#endif // DEBUG
 	return static_cast<float>(mDeltaTime);
 }
 

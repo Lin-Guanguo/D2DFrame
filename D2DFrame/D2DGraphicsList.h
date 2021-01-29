@@ -25,7 +25,7 @@ public:
     //改变renderTarget的大小
     //renderTarget会自动拉伸至覆盖整个窗口，
     //若不希望有拉伸效果可在 WM_SIZE 中调用该方法 resize
-    void resize(int x, int y);
+    void resize(D2D1_SIZE_U size);
 
     void render(HWND hwnd);
 

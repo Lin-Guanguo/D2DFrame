@@ -19,9 +19,9 @@ void LGG::D2DGraphicsList::initialization()
     createDeviceIndependentResources();
 }
 
-void LGG::D2DGraphicsList::resize(int x, int y)
+void LGG::D2DGraphicsList::resize(D2D1_SIZE_U size)
 {
-    mSizeofRenderTarget = D2D1::SizeU(x, y);
+    mSizeofRenderTarget = size;
     if (mRenderTarget) {
         THROW_ON_FAILED(
             mRenderTarget->Resize(mSizeofRenderTarget)
